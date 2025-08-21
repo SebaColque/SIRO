@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>VCY — Participá</title>
+  <title>Encuesta - SIRO</title>
 
   <link rel="icon" href="./logo-siro.png" />
 
@@ -100,20 +100,39 @@
       text-align:center;
       padding:40px 20px;
       animation: popIn 0.6s ease both;
+
+      /* 👇 Esto centra el card en la página */
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 600px;
+      border-radius: var(--card-radius);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     }
     @keyframes popIn {
       from {opacity:0; transform:scale(0.8);}
       to {opacity:1; transform:scale(1);}
     }
     .card.success .logo-success{
-      width:80px;
+      /* width:80px;
       height:80px;
-      margin:0 auto 16px;
+      margin:0 auto 16px; */
       animation: bounce 1s ease infinite alternate;
+      width:120px;
+      height:auto;
+      margin:0 auto 16px;
     }
     @keyframes bounce {
       from {transform: translateY(0);}
       to {transform: translateY(-6px);}
+    }
+    .card.success .logo-success img{
+      width:100%;
+      height:auto;
+      object-fit:contain;
+      display:block;
     }
     .card.success h2{font-size:22px;margin:0 0 8px;}
     .card.success p{margin:0;font-size:15px;}
