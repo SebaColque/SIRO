@@ -136,6 +136,81 @@
     }
     .card.success h2{font-size:22px;margin:0 0 8px;}
     .card.success p{margin:0;font-size:15px;}
+
+    /* ====== Modal overlay (centra en pantalla) ====== */
+    .overlay {
+      position: fixed;
+      inset: 0;                    /* top:0; right:0; bottom:0; left:0 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.28);
+      z-index: 9999;
+      animation: overlayFade 0.18s ease;
+    }
+
+    @keyframes overlayFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* modal box dentro del overlay */
+    .modal {
+      background: var(--green);
+      color: #fff;
+      width: min(92%, 640px);
+      border-radius: 14px;
+      padding: 28px 22px;
+      box-shadow: 0 18px 40px rgba(6, 105, 55, 0.25);
+      text-align: center;
+      transform: translateY(10px) scale(0.98);
+      opacity: 0;
+      animation: modalPop 420ms cubic-bezier(.16,.84,.44,1) forwards;
+    }
+
+    /* animación pop */
+    @keyframes modalPop {
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    /* logo dentro del modal */
+    .modal .logo-success{
+      width: 140px;
+      height: auto;
+      margin: 0 auto 14px;
+    }
+    .modal .logo-success img{
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      display:block;
+    }
+
+    /* textos */
+    .modal h2{ font-size:20px; margin:8px 0 6px; font-weight:700; letter-spacing:0.2px }
+    .modal p{ margin:0;color:rgba(255,255,255,0.95); font-size:14px }
+
+    /* botón cerrar opcional */
+    .modal .close-btn{
+      margin-top:14px;
+      display:inline-block;
+      background:rgba(255,255,255,0.12);
+      color:#fff;
+      padding:8px 14px;
+      border-radius:8px;
+      border:0;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    /* opcional: desenfoque suave del fondo (añadir la clase .blur en el card) */
+    .card.blur {
+      filter: blur(3px) saturate(.95);
+      transition: filter 220ms ease;
+      pointer-events: none;
+      user-select: none;
+    }
+
   </style>
 </head>
 <body>
@@ -229,16 +304,12 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dataToSend)
         });
-        if(res.ok){
-          card.classList.add("success");
-          card.innerHTML = `
-            <div class="logo-success">
-              <img src="./logo-siro-gracias.png" alt="Logo éxito"/>
-            </div>
-            <h2>¡Gracias ${dataToSend.fullname}!</h2>
-            <p>Tus respuestas fueron guardadas correctamente.</p>
-          `;
-        }else{
+        if (res.ok) {
+          // mostramos modal flotante centrado
+          showSuccessModal(dataToSend.fullname, './logo-siro-gracias.png', 4000);
+          // opcional: vaciar form o mantenerlo según prefieras
+          form.reset();
+        } else {
           msg.textContent = 'Error al enviar. Intentá de nuevo.';
         }
       } catch (err){
@@ -247,6 +318,64 @@
         btn.disabled = false;
       }
     });
+
+    /* ----------------- helper: mostrar modal de éxito ----------------- */
+    function showSuccessModal(name, logoPath = './logo-siro-gracias.png', autoCloseMs = 3500) {
+      // Si ya existe un overlay, no creamos otro
+      if (document.querySelector('.overlay')) return;
+
+      // desenfocar background (opcional)
+      const cardEl = document.getElementById('cardBox');
+      if (cardEl) cardEl.classList.add('blur');
+
+      // crear overlay
+      const overlay = document.createElement('div');
+      overlay.className = 'overlay';
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+
+      // modal content
+      overlay.innerHTML = `
+        <div class="modal" role="document">
+          <div class="logo-success"><img src="${logoPath}" alt="SIRO logo"></div>
+          <h2>¡Gracias ${escapeHtml(name || '')}!</h2>
+          <p>Tus respuestas fueron guardadas correctamente.</p>
+          <div style="height:8px"></div>
+          <button class="close-btn" type="button" aria-label="Cerrar">Cerrar</button>
+        </div>
+      `;
+
+      // cerrar al click del overlay (fuera del modal) o del botón Close
+      overlay.addEventListener('click', (ev) => {
+        if (ev.target === overlay) removeOverlay();
+      });
+      overlay.querySelector('.close-btn').addEventListener('click', removeOverlay);
+
+      // helper para eliminar y limpiar
+      function removeOverlay() {
+        if (cardEl) cardEl.classList.remove('blur');
+        overlay.remove();
+      }
+
+      // agregar al body
+      document.body.appendChild(overlay);
+
+      // auto close si se requiere
+      if (autoCloseMs && autoCloseMs > 0) {
+        setTimeout(removeOverlay, autoCloseMs);
+      }
+    }
+
+    /* pequeño escape para evitar inyección en el nombre mostrado */
+    function escapeHtml(unsafe) {
+      return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
   </script>
 </body>
 </html>
