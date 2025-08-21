@@ -160,20 +160,40 @@
       // Si no viene teléfono, dejalo vacío (no obligatorio)
       if(!data.phone) data.phone = "";
 
+      // Reemplazar el bloque fetch(...) por esto temporalmente para debug:
       try {
+        const payload = Object.fromEntries(new FormData(form).entries());
+        // normalizar nombres (aseguramos que las claves existan)
+        const dataToSend = {
+          q1: payload.q1 || "",
+          q2: payload.q2 || "",
+          q3: payload.q3 || "",
+          fullName: payload.fullName || "",
+          institution: payload.institution || "",
+          phone: payload.phone || "",
+          campaign: payload.campaign || ""
+        };
+
+        console.log("Payload a enviar:", dataToSend);
+
         const res = await fetch(ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
+          body: JSON.stringify(dataToSend)
         });
 
-        const json = await res.json().catch(()=>({}));
-        if (res.ok && json.ok) {
-          msg.innerHTML = `¡Gracias ${data.fullName}! Tus respuestas fueron guardadas.`;
+        const text = await res.text(); // siempre leemos el body como text para ver errores
+        console.log("HTTP status:", res.status, res.statusText);
+        console.log("Body de respuesta (texto):", text);
+
+        let json;
+        try { json = JSON.parse(text); } catch(e){ json = null; }
+
+        if (res.ok && json && json.ok) {
+          msg.innerHTML = `¡Gracias ${dataToSend.fullName}! Tus respuestas fueron guardadas.`;
           form.reset();
         } else {
-          // mostrar mensaje con detalle si lo hay
-          msg.textContent = 'No se pudo enviar. ' + (json.error || 'Intentá nuevamente.');
+          msg.textContent = 'No se pudo enviar. ' + (json?.error || text || 'Intentá nuevamente.');
         }
       } catch (err) {
         console.error(err);
@@ -181,6 +201,7 @@
       } finally {
         btn.disabled = false;
       }
+
     });
   </script>
 </body>
