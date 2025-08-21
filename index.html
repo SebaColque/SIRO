@@ -77,6 +77,12 @@
       transition: all 0.18s ease;
       user-select:none;
     }
+    .radio-btn{
+      display:flex;
+      gap:0;                 /* elimina el espacio dejado por el input visual */
+      align-items:center;
+      padding:12px;
+    }
     .radio-btn:hover{
       background:#fff;
       box-shadow:0 4px 10px rgba(0,0,0,0.06);
@@ -98,8 +104,27 @@
       background: transparent; /* sin puntito */
       outline: none;
     }
+    .radio-btn input[type="radio"]{
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+      opacity: 0;
+    }
+    .radio-btn span{
+      margin-left: 12px;
+    }
     .radio-btn input[type="radio"]:focus{
       box-shadow: 0 0 0 3px rgba(6,105,55,0.12);
+    }
+
+    .radio-btn.selected span{
+      color: #fff;
     }
 
     /* selected state when user taps an option */
