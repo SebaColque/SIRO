@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VCY — Participá</title>
+  <style>
+    :root{--accent:#0b5cdf;--bg:#f7f8fb}
+    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:var(--bg); margin:0; padding:20px; display:flex; align-items:center; justify-content:center; min-height:100vh}
+    .card{width:100%;max-width:560px;background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(20,30,60,0.06);padding:22px}
+    h1{font-size:20px;margin:0 0 8px}
+    p.lead{margin:0 0 16px;color:#444}
+    label{display:block;margin-top:12px;font-size:14px;color:#222}
+    select,input[type="text"],input[type="email"],input[type="tel"]{width:100%;padding:10px;border-radius:8px;border:1px solid #e6e9ef;margin-top:6px;box-sizing:border-box}
+    .row{display:flex;gap:12px}
+    .row .col{flex:1}
+    .btn{display:inline-block;background:var(--accent);color:white;padding:10px 16px;border-radius:8px;border:0;margin-top:14px;cursor:pointer}
+    .muted{font-size:12px;color:#666;margin-top:8px}
+    #msg{margin-top:12px}
+    @media (max-width:480px){.card{padding:16px}}
+  </style>
+</head>
+<body>
+  <div class="card" role="main">
+    <h1>Escaneá y participá — 30s</h1>
+    <p class="lead">Respondé 2 preguntas y dejá tu contacto. Recibís un cupón instantáneo y entrás al sorteo.</p>
+
+    <form id="leadForm" autocomplete="off">
+      <label>1- ¿Qué te interesa?
+        <select name="q1" required>
+          <option value="">--Elegí--</option>
+          <option value="Demo">Demo</option>
+          <option value="Precios">Precios</option>
+          <option value="Soporte">Soporte</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </label>
+
+      <label>2- ¿En qué plazo?
+        <select name="q2" required>
+          <option value="">--Elegí--</option>
+          <option value="0-3 meses">0-3 meses</option>
+          <option value="3-6 meses">3-6 meses</option>
+          <option value="Solo investigando">Solo investigando</option>
+        </select>
+      </label>
+
+      <div class="row">
+        <div class="col">
+          <label>Nombre
+            <input name="name" type="text" required placeholder="Tu nombre"/>
+          </label>
+        </div>
+        <div class="col">
+          <label>Teléfono (opcional)
+            <input name="phone" type="tel" placeholder="+54 9 ..."/>
+          </label>
+        </div>
+      </div>
+
+      <label>Email
+        <input name="email" type="email" required placeholder="tunombre@ejemplo.com"/>
+      </label>
+
+      <label style="margin-top:10px">
+        <input id="consent" type="checkbox" name="consent" required /> Acepto recibir comunicaciones y que usen mis datos para contactarme.
+      </label>
+
+      <input type="hidden" name="campaign" value="standA" />
+
+      <button id="submitBtn" class="btn" type="submit">Enviar y participar</button>
+      <div id="msg" class="muted" role="status" aria-live="polite"></div>
+      <p class="muted" style="margin-top:10px;font-size:12px">No compartimos tus datos. Bases del sorteo disponibles en vcy.io/bases</p>
+    </form>
+  </div>
+
+  <script>
+    // === CONFIG (reemplazar) ===
+    const ENDPOINT = 'POWER_AUTOMATE_ENDPOINT'; // <-- pegar la URL del trigger HTTP de Power Automate
+    // const API_KEY = 'MI_SECRETO_123';           // <-- elegí un secret largo/fuerte
+    // ===========================
+
+    const form = document.getElementById('leadForm');
+    const msg = document.getElementById('msg');
+    const btn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      btn.disabled = true;
+      msg.textContent = 'Enviando...';
+      const data = Object.fromEntries(new FormData(form).entries());
+      // checkbox value normalizado
+      data.consent = document.getElementById('consent').checked;
+      try {
+        const r = await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // 'x-api-key': API_KEY
+          },
+          body: JSON.stringify(data)
+        });
+        const json = await r.json();
+        if (r.ok && json.ok) {
+          msg.innerHTML = `¡Gracias ${data.name}! Tu cupón: <strong>${json.coupon}</strong><br>Mostranos esta pantalla en el stand para retirar tu regalo.`;
+          form.reset();
+        } else {
+          msg.textContent = 'No se pudo enviar. ' + (json.error || 'Intentá nuevamente.');
+        }
+      } catch (err) {
+        console.error(err);
+        msg.textContent = 'Error de red. Verificá conexión.';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
