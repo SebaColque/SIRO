@@ -15,7 +15,7 @@
       --text: #0b2b20;
       --card-radius: 12px;
     }
-    /* prevent mobile font auto-adjust and ensure base font prevents zoom-on-focus */
+    
     html, body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 
     body{
@@ -29,7 +29,6 @@
       padding:18px;
       box-sizing:border-box;
       -webkit-font-smoothing:antialiased;
-      /* base font-size 16px to avoid iOS zoom on inputs */
       font-size:16px;
     }
     .wrap{width:100%;max-width:720px;margin:18px auto 80px}
@@ -48,7 +47,7 @@
       from {opacity:0; transform: translateY(20px);} 
       to {opacity:1; transform: translateY(0);} 
     }
-    /* header: logo centered */
+    
     .hdr{display:flex;gap:12px;align-items:center;margin-bottom:8px;justify-content:center}
     .logo{
       width:120px;height:120px;border-radius:14px;background:#fff;
@@ -63,9 +62,9 @@
     h1{font-size:18px;margin:6px 0 8px; text-align:center; color: var(--green);}
     p.lead{font-size:13px;margin:0 0 16px;color:#425148}
 
-    /* Preguntas */
+    
     .question-block{
-      margin-top:22px; /* espacio entre bloques */
+      margin-top:22px;
       animation: fadeInUp 0.9s ease both;
     }
 
@@ -79,7 +78,7 @@
     }
     .radio-btn{
       display:flex;
-      gap:0;                 /* elimina el espacio dejado por el input visual */
+      gap:0;
       align-items:center;
       padding:12px;
     }
@@ -101,7 +100,7 @@
       position: relative;
       cursor: pointer;
       vertical-align: middle;
-      background: transparent; /* sin puntito */
+      background: transparent;
       outline: none;
     }
     .radio-btn input[type="radio"]{
@@ -127,7 +126,7 @@
       color: #fff;
     }
 
-    /* selected state when user taps an option */
+    
     .radio-btn.selected{
       background: var(--green);
       color: #fff;
@@ -136,16 +135,16 @@
     }
     .radio-btn.selected input[type="radio"]{
       border-color: rgba(255,255,255,0.95);
-      background: transparent; /* sin puntito visible */
+      background: transparent;
     }
     .radio-btn span{font-size:14px}
 
-    /* Inputs de texto */
+    
     .field{width:100%;padding:10px;border-radius:10px;border:1px solid #e7ebe8;
       margin-top:8px;box-sizing:border-box;background:#fff;transition:border 0.2s ease; font-size:16px}
     .field:focus{border:1px solid var(--green);outline:none;box-shadow:0 0 0 2px rgba(6,105,55,0.12); scroll-margin-top:120px}
 
-    /* Botón */
+    
     .btn{
       display:inline-block;width:100%;text-align:center;padding:12px 14px;border-radius:10px;
       border:0;background:var(--green);color:#fff;font-weight:600;margin-top:24px;cursor:pointer;
@@ -155,7 +154,7 @@
     .muted{font-size:12px;color:#6a736c;margin-top:10px}
     #msg{margin-top:14px;font-size:14px}
 
-    /* Estado de gracias */
+    
     .card.success{
       background: var(--green);
       color: #fff;
@@ -163,7 +162,7 @@
       padding:40px 20px;
       animation: popIn 0.6s ease both;
 
-      /* 👇 Esto centra el card en la página */
+      
       position: fixed;
       top: 50%;
       left: 50%;
@@ -191,10 +190,10 @@
     .card.success h2{font-size:22px;margin:0 0 8px;}
     .card.success p{margin:0;font-size:15px;}
 
-    /* ====== Modal overlay (centra en pantalla) ====== */
+    
     .overlay {
       position: fixed;
-      inset: 0;                    /* top:0; right:0; bottom:0; left:0 */
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -205,7 +204,7 @@
 
     @keyframes overlayFade { from { opacity: 0; } to { opacity: 1; } }
 
-    /* modal box dentro del overlay */
+    
     .modal { background: var(--green); color: #fff; width: min(92%, 640px); border-radius: 14px; padding: 28px 22px; box-shadow: 0 18px 40px rgba(6, 105, 55, 0.25); text-align: center; transform: translateY(10px) scale(0.98); opacity: 0; animation: modalPop 420ms cubic-bezier(.16,.84,.44,1) forwards; }
 
     @keyframes modalPop { to { transform: translateY(0) scale(1); opacity: 1; } }
@@ -217,7 +216,7 @@
 
     .card.blur { filter: blur(3px) saturate(.95); transition: filter 220ms ease; pointer-events: none; user-select: none; }
 
-    /* small screens tweaks */
+    
     @media (max-width:420px){
       .logo{ width:96px; height:96px }
       h1{ font-size:17px }
@@ -274,17 +273,17 @@
         <!-- DATOS -->
         <div class="question-block">
           <label>Nombre y Apellido</label>
-          <input class="field" name="fullname" type="text" placeholder="Ej: María Pérez" required />
+          <input class="field" name="fullname" type="text" placeholder="Escribe tu nombre completo" required />
         </div>
 
         <div class="question-block">
           <label>Institución que representa</label>
-          <input class="field" name="institution" type="text" placeholder="Nombre del colegio / institución" required />
+          <input class="field" name="institution" type="text" placeholder="Indica la institución que representas" required />
         </div>
 
         <div class="question-block">
           <label>Teléfono</label>
-          <input class="field" name="phone" type="tel" inputmode="numeric" pattern="[0-9]+" placeholder="Solo números" required />
+          <input class="field" name="phone" type="tel" inputmode="numeric" pattern="[0-9]+" placeholder="Ingresa tu número de contacto" required />
         </div>
 
         <input type="hidden" name="campaign" value="standA" />
@@ -301,17 +300,17 @@
     const btn = document.getElementById('submitBtn');
     const card = document.getElementById('cardBox');
 
-    // --- Gestionar estado 'selected' en las opciones (accesible y simple) ---
+    
     function initRadioSelection() {
       document.querySelectorAll('.radio-row').forEach(row => {
-        // al cambio dentro del grupo actualizamos las clases
+        
         row.addEventListener('change', () => updateSelected(row));
-        // clicks por si algunos navegadores no disparan change inmediatamente
+        
         row.addEventListener('click', (ev) => {
           const input = ev.target.closest('input[type="radio"]');
           if (input) updateSelected(row);
         });
-        // init state
+        
         updateSelected(row);
       });
     }
@@ -344,11 +343,11 @@
           body: JSON.stringify(dataToSend)
         });
         if (res.ok) {
-          // mostramos modal flotante centrado
+          
           showSuccessModal(dataToSend.fullname, './logo-siro-gracias.png', 4000);
-          // opcional: vaciar form o mantenerlo según prefieras
+          
           form.reset();
-          // limpiar estados visuales de selected
+          
           document.querySelectorAll('.radio-btn.selected').forEach(n => n.classList.remove('selected'));
         } else {
           msg.textContent = 'Error al enviar. Intentá de nuevo.';
@@ -362,20 +361,20 @@
 
     /* ----------------- helper: mostrar modal de éxito ----------------- */
     function showSuccessModal(name, logoPath = './logo-siro-gracias.png', autoCloseMs = 3500) {
-      // Si ya existe un overlay, no creamos otro
+      
       if (document.querySelector('.overlay')) return;
 
-      // desenfocar background (opcional)
+      
       const cardEl = document.getElementById('cardBox');
       if (cardEl) cardEl.classList.add('blur');
 
-      // crear overlay
+      
       const overlay = document.createElement('div');
       overlay.className = 'overlay';
       overlay.setAttribute('role', 'dialog');
       overlay.setAttribute('aria-modal', 'true');
 
-      // modal content
+      
       overlay.innerHTML = `
         <div class="modal" role="document">
           <div class="logo-success"><img src="${logoPath}" alt="SIRO logo"></div>
@@ -386,28 +385,28 @@
         </div>
       `;
 
-      // cerrar al click del overlay (fuera del modal) o del botón Close
+      
       overlay.addEventListener('click', (ev) => {
         if (ev.target === overlay) removeOverlay();
       });
       overlay.querySelector('.close-btn').addEventListener('click', removeOverlay);
 
-      // helper para eliminar y limpiar
+      
       function removeOverlay() {
         if (cardEl) cardEl.classList.remove('blur');
         overlay.remove();
       }
 
-      // agregar al body
+      
       document.body.appendChild(overlay);
 
-      // auto close si se requiere
+      
       if (autoCloseMs && autoCloseMs > 0) {
         setTimeout(removeOverlay, autoCloseMs);
       }
     }
 
-    /* pequeño escape para evitar inyección en el nombre mostrado */
+    
     function escapeHtml(unsafe) {
       return unsafe
         .replace(/&/g, "&amp;")
@@ -417,8 +416,6 @@
         .replace(/'/g, "&#039;");
     }
 
-    // evitar que el foco en inputs cause un zoom vertical demasiado agresivo en algunos navegadores
-    // (esto es un refuerzo; la principal solución es el font-size:16px en body + inputs)
     document.addEventListener('touchstart', function(){}, {passive:true});
 
   </script>
