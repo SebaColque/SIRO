@@ -27,7 +27,7 @@
       box-sizing:border-box;
       -webkit-font-smoothing:antialiased;
     }
-    .wrap{width:100%;max-width:720px;margin:18px auto 80px} /* más margin abajo */
+    .wrap{width:100%;max-width:720px;margin:18px auto 80px}
     .card{
       background:#fff;
       border-radius:var(--card-radius);
@@ -37,6 +37,11 @@
       border:1px solid rgba(6,105,55,0.06);
       transition: all 0.6s ease;
       overflow:hidden;
+      animation: fadeInUp 0.8s ease both;
+    }
+    @keyframes fadeInUp {
+      from {opacity:0; transform: translateY(20px);}
+      to {opacity:1; transform: translateY(0);}
     }
     .hdr{display:flex;gap:12px;align-items:center;margin-bottom:16px}
     .logo{
@@ -45,28 +50,46 @@
       flex-shrink:0;
     }
     .logo img{width:100%;height:100%;object-fit:contain;display:block}
-    .brand-title{font-weight:700;font-size:20px;color:var(--green)}
     .subtitle{font-size:13px;margin:0;color:#2f3f36}
-
     h1{font-size:18px;margin:6px 0 8px}
     p.lead{font-size:13px;margin:0 0 16px;color:#425148}
 
-    label{display:block;font-size:14px;margin-top:18px;color:#24332a}
-    .field{width:100%;padding:10px;border-radius:10px;border:1px solid #e7ebe8;margin-top:8px;box-sizing:border-box;background:#fff}
+    /* Preguntas */
+    .question-block{
+      margin-top:28px; /* espacio entre bloques */
+      animation: fadeInUp 0.9s ease both;
+    }
+
+    label{display:block;font-size:14px;color:#24332a}
     .radio-row{display:flex;flex-direction:column;gap:10px;margin-top:10px}
-    .radio-btn{display:flex;gap:10px;align-items:center;padding:10px;border-radius:10px;border:1px solid #d6e1dc;background:#fafafa;cursor:pointer}
+    .radio-btn{
+      display:flex;gap:10px;align-items:center;padding:12px;
+      border-radius:10px;border:1px solid #d6e1dc;background:#fafafa;cursor:pointer;
+      transition: all 0.25s ease;
+    }
+    .radio-btn:hover{
+      background:#fff;
+      box-shadow:0 4px 10px rgba(0,0,0,0.08);
+      transform:translateY(-2px);
+    }
     .radio-btn input[type="radio"]{
-      accent-color: var(--green); /* color verde al seleccionar */
+      accent-color: var(--green);
       transform:scale(1.2);
       cursor:pointer;
     }
 
+    /* Inputs de texto */
+    .field{width:100%;padding:10px;border-radius:10px;border:1px solid #e7ebe8;
+      margin-top:8px;box-sizing:border-box;background:#fff;transition:border 0.2s ease}
+    .field:focus{border:1px solid var(--green);outline:none;box-shadow:0 0 0 2px rgba(6,105,55,0.2)}
+
+    /* Botón */
     .btn{
-      display:inline-block;width:100%;text-align:center;padding:12px 14px;border-radius:10px;border:0;background:var(--green);
-      color:#fff;font-weight:600;margin-top:20px;cursor:pointer;font-size:15px;
-      transition: background 0.3s;
+      display:inline-block;width:100%;text-align:center;padding:12px 14px;border-radius:10px;
+      border:0;background:var(--green);color:#fff;font-weight:600;margin-top:24px;cursor:pointer;
+      font-size:15px;transition: background 0.3s, transform 0.2s;
     }
-    .btn:hover{background:#05582b}
+    .btn:hover{background:#05582b; transform:scale(1.02)}
     .muted{font-size:12px;color:#6a736c;margin-top:10px}
     #msg{margin-top:14px;font-size:14px}
 
@@ -76,21 +99,24 @@
       color: #fff;
       text-align:center;
       padding:40px 20px;
+      animation: popIn 0.6s ease both;
+    }
+    @keyframes popIn {
+      from {opacity:0; transform:scale(0.8);}
+      to {opacity:1; transform:scale(1);}
     }
     .card.success .logo-success{
       width:80px;
       height:80px;
       margin:0 auto 16px;
+      animation: bounce 1s ease infinite alternate;
     }
-    .card.success .logo-success img{
-      width:100%;height:100%;object-fit:contain;
+    @keyframes bounce {
+      from {transform: translateY(0);}
+      to {transform: translateY(-6px);}
     }
-    .card.success h2{
-      font-size:22px;margin:0 0 8px;
-    }
-    .card.success p{
-      margin:0;font-size:15px;
-    }
+    .card.success h2{font-size:22px;margin:0 0 8px;}
+    .card.success p{margin:0;font-size:15px;}
   </style>
 </head>
 <body>
@@ -100,9 +126,7 @@
         <div class="logo" aria-hidden="true">
           <img src="./logo-siro.png" alt="SIRO logo"/>
         </div>
-        <div>
-          <div class="subtitle">VCY · Encuesta rápida</div>
-        </div>
+        <div><div class="subtitle">VCY · Encuesta rápida</div></div>
       </div>
 
       <h1 id="pageTitle">2 minutos — Contanos sobre tu cobranza</h1>
@@ -110,41 +134,53 @@
 
       <form id="leadForm" autocomplete="off">
         <!-- P1 -->
-        <label>1- ¿Con qué frase describirías el estado de tu cobranza hoy?</label>
-        <div class="radio-row">
-          <label class="radio-btn"><input type="radio" name="q1" value="Todo bajo control" required/> <span>Todo bajo control</span></label>
-          <label class="radio-btn"><input type="radio" name="q1" value="Apago incendio todos los meses" required/> <span>Apago incendio todos los meses</span></label>
-          <label class="radio-btn"><input type="radio" name="q1" value="Sálvese quien pueda" required/> <span>Sálvese quien pueda</span></label>
-          <label class="radio-btn"><input type="radio" name="q1" value="Tenemos todo automatizado" required/> <span>Tenemos todo automatizado</span></label>
+        <div class="question-block">
+          <label>1- ¿Con qué frase describirías el estado de tu cobranza hoy?</label>
+          <div class="radio-row">
+            <label class="radio-btn"><input type="radio" name="q1" value="Todo bajo control" required/> <span>Todo bajo control</span></label>
+            <label class="radio-btn"><input type="radio" name="q1" value="Apago incendio todos los meses" required/> <span>Apago incendio todos los meses</span></label>
+            <label class="radio-btn"><input type="radio" name="q1" value="Sálvese quien pueda" required/> <span>Sálvese quien pueda</span></label>
+            <label class="radio-btn"><input type="radio" name="q1" value="Tenemos todo automatizado" required/> <span>Tenemos todo automatizado</span></label>
+          </div>
         </div>
 
         <!-- P2 -->
-        <label>2- Si la cobranza fuera un deporte en tu colegio, sería…</label>
-        <div class="radio-row">
-          <label class="radio-btn"><input type="radio" name="q2" value="Maratón" required/> <span>Maratón (larga y agotadora)</span></label>
-          <label class="radio-btn"><input type="radio" name="q2" value="Boxeo" required/> <span>Boxeo (todos los meses peleando)</span></label>
-          <label class="radio-btn"><input type="radio" name="q2" value="Yoga" required/> <span>Yoga (tranquila y en paz)</span></label>
-          <label class="radio-btn"><input type="radio" name="q2" value="Fórmula 1" required/> <span>Fórmula 1 (rápida y con mucha tecnología)</span></label>
+        <div class="question-block">
+          <label>2- Si la cobranza fuera un deporte en tu colegio, sería…</label>
+          <div class="radio-row">
+            <label class="radio-btn"><input type="radio" name="q2" value="Maratón" required/> <span>Maratón (larga y agotadora)</span></label>
+            <label class="radio-btn"><input type="radio" name="q2" value="Boxeo" required/> <span>Boxeo (todos los meses peleando)</span></label>
+            <label class="radio-btn"><input type="radio" name="q2" value="Yoga" required/> <span>Yoga (tranquila y en paz)</span></label>
+            <label class="radio-btn"><input type="radio" name="q2" value="Fórmula 1" required/> <span>Fórmula 1 (rápida y con mucha tecnología)</span></label>
+          </div>
         </div>
 
         <!-- P3 -->
-        <label>3- ¿Cómo se comportan los padres de tu colegio al pagar?</label>
-        <div class="radio-row">
-          <label class="radio-btn"><input type="radio" name="q3" value="Puntuales" required/> <span>Puntuales como reloj suizo</span></label>
-          <label class="radio-btn"><input type="radio" name="q3" value="Distraídos" required/> <span>Se hacen los distraídos</span></label>
-          <label class="radio-btn"><input type="radio" name="q3" value="Siempre tarde" required/> <span>Pagan, pero siempre tarde</span></label>
-          <label class="radio-btn"><input type="radio" name="q3" value="Con alternativas" required/> <span>Pagan fácil porque tienen alternativas</span></label>
+        <div class="question-block">
+          <label>3- ¿Cómo se comportan los padres de tu colegio al pagar?</label>
+          <div class="radio-row">
+            <label class="radio-btn"><input type="radio" name="q3" value="Puntuales" required/> <span>Puntuales como reloj suizo</span></label>
+            <label class="radio-btn"><input type="radio" name="q3" value="Distraídos" required/> <span>Se hacen los distraídos</span></label>
+            <label class="radio-btn"><input type="radio" name="q3" value="Siempre tarde" required/> <span>Pagan, pero siempre tarde</span></label>
+            <label class="radio-btn"><input type="radio" name="q3" value="Con alternativas" required/> <span>Pagan fácil porque tienen alternativas</span></label>
+          </div>
         </div>
 
         <!-- DATOS -->
-        <label>Nombre y Apellido</label>
-        <input class="field" name="fullname" type="text" placeholder="Ej: María Pérez" required />
+        <div class="question-block">
+          <label>Nombre y Apellido</label>
+          <input class="field" name="fullname" type="text" placeholder="Ej: María Pérez" required />
+        </div>
 
-        <label>Institución que representa</label>
-        <input class="field" name="institution" type="text" placeholder="Nombre del colegio / institución" required />
+        <div class="question-block">
+          <label>Institución que representa</label>
+          <input class="field" name="institution" type="text" placeholder="Nombre del colegio / institución" required />
+        </div>
 
-        <label>Teléfono</label>
-        <input class="field" name="phone" type="tel" inputmode="numeric" pattern="[0-9]+" placeholder="Solo números" />
+        <div class="question-block">
+          <label>Teléfono</label>
+          <input class="field" name="phone" type="tel" inputmode="numeric" pattern="[0-9]+" placeholder="Solo números" />
+        </div>
 
         <input type="hidden" name="campaign" value="standA" />
         <button id="submitBtn" class="btn" type="submit">Enviar</button>
@@ -154,7 +190,7 @@
   </div>
 
   <script>
-    const ENDPOINT = "https://prod-08.brazilsouth.logic.azure.com/workflows/fdc421922b074f4689709fb7f59f3fba/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Xl30kx4vfUwUi877MOaMTh5p4FqEXZIDjTI0tlPR0ZI"; // <--- cambia aquí
+    const ENDPOINT = "https://prod-08.brazilsouth.logic.azure.com/workflows/fdc421922b074f4689709fb7f59f3fba/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Xl30kx4vfUwUi877MOaMTh5p4FqEXZIDjTI0tlPR0ZI"; // cambia aquí
     const form = document.getElementById('leadForm');
     const msg = document.getElementById('msg');
     const btn = document.getElementById('submitBtn');
@@ -175,7 +211,6 @@
           body: JSON.stringify(dataToSend)
         });
         if(res.ok){
-          // Animación de éxito
           card.classList.add("success");
           card.innerHTML = `
             <div class="logo-success">
