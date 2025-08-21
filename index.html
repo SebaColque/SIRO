@@ -83,9 +83,23 @@
       transform:translateY(-2px);
     }
     .radio-btn input[type="radio"]{
-      accent-color: var(--green);
-      transform:scale(1.18);
-      cursor:pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid #cfd8d3;
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      cursor: pointer;
+      vertical-align: middle;
+      background: transparent; /* sin puntito */
+      outline: none;
+    }
+    .radio-btn input[type="radio"]:focus{
+      box-shadow: 0 0 0 3px rgba(6,105,55,0.12);
     }
 
     /* selected state when user taps an option */
@@ -95,7 +109,10 @@
       border-color: rgba(6,105,55,0.20);
       box-shadow: none;
     }
-    .radio-btn.selected input[type="radio"]{ accent-color: #fff; }
+    .radio-btn.selected input[type="radio"]{
+      border-color: rgba(255,255,255,0.95);
+      background: transparent; /* sin puntito visible */
+    }
     .radio-btn span{font-size:14px}
 
     /* Inputs de texto */
