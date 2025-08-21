@@ -125,7 +125,7 @@
 
         <!-- DATOS -->
         <label style="margin-top:12px">Nombre y Apellido</label>
-        <input class="field" name="fullName" type="text" placeholder="Ej: María Pérez" required />
+        <input class="field" name="fullname" type="text" placeholder="Ej: María Pérez" required />
 
         <label style="margin-top:10px">Institución que representa</label>
         <input class="field" name="institution" type="text" placeholder="Nombre del colegio / institución" required />
@@ -168,7 +168,7 @@
           q1: payload.q1 || "",
           q2: payload.q2 || "",
           q3: payload.q3 || "",
-          fullName: payload.fullName || "",
+          fullname: payload.fullname || "",
           institution: payload.institution || "",
           phone: payload.phone || "",
           campaign: payload.campaign || ""
@@ -190,7 +190,7 @@
         try { json = JSON.parse(text); } catch(e){ json = null; }
 
         if (res.ok && json && json.ok) {
-          msg.innerHTML = `¡Gracias ${dataToSend.fullName}! Tus respuestas fueron guardadas.`;
+          msg.innerHTML = `¡Gracias ${dataToSend.fullname}! Tus respuestas fueron guardadas.`;
           form.reset();
         } else {
           msg.textContent = 'No se pudo enviar. ' + (json?.error || text || 'Intentá nuevamente.');
