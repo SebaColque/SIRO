@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>VCY — Participá</title>
 
-  <!-- FAVICON (reemplazá la ruta por tu favicon) -->
   <link rel="icon" href="./logo-siro.png" />
 
   <style>
-    /* Mobile-first */
     :root{
       --green: #066937;
       --yellow: #F3AC33;
@@ -17,7 +15,6 @@
       --text: #0b2b20;
       --card-radius: 12px;
     }
-    html,body{height:100%}
     body{
       margin:0;
       font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
@@ -30,64 +27,80 @@
       box-sizing:border-box;
       -webkit-font-smoothing:antialiased;
     }
-
-    .wrap{width:100%;max-width:720px;margin:18px auto 48px}
+    .wrap{width:100%;max-width:720px;margin:18px auto 80px} /* más margin abajo */
     .card{
       background:#fff;
       border-radius:var(--card-radius);
       box-shadow:0 8px 24px rgba(6,105,55,0.06);
-      padding:16px;
+      padding:20px;
       box-sizing:border-box;
       border:1px solid rgba(6,105,55,0.06);
+      transition: all 0.6s ease;
+      overflow:hidden;
     }
-
-    /* header with logo or text */
-    .hdr{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+    .hdr{display:flex;gap:12px;align-items:center;margin-bottom:16px}
     .logo{
-      width:48px;height:48px;border-radius:8px;background:linear-gradient(180deg,var(--green),#055e2e);
+      width:56px;height:56px;border-radius:8px;background:#fff;
       display:flex;align-items:center;justify-content:center;overflow:hidden;
       flex-shrink:0;
     }
     .logo img{width:100%;height:100%;object-fit:contain;display:block}
-    .brand-title{font-weight:700;font-size:18px;color:var(--green)}
+    .brand-title{font-weight:700;font-size:20px;color:var(--green)}
     .subtitle{font-size:13px;margin:0;color:#2f3f36}
 
-    h1{font-size:16px;margin:6px 0 2px}
-    p.lead{font-size:13px;margin:0 0 12px;color:#425148}
+    h1{font-size:18px;margin:6px 0 8px}
+    p.lead{font-size:13px;margin:0 0 16px;color:#425148}
 
-    label{display:block;font-size:14px;margin-top:12px;color:#24332a}
+    label{display:block;font-size:14px;margin-top:18px;color:#24332a}
     .field{width:100%;padding:10px;border-radius:10px;border:1px solid #e7ebe8;margin-top:8px;box-sizing:border-box;background:#fff}
-    .radio-row{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-    .radio-btn{display:flex;gap:10px;align-items:center;padding:8px;border-radius:10px;border:1px solid #f0f2ef;background:#fafafa}
-    .radio-btn input{transform:scale(1.05)}
-    .two-cols{display:flex;gap:10px;margin-top:8px}
-    .col{flex:1}
+    .radio-row{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+    .radio-btn{display:flex;gap:10px;align-items:center;padding:10px;border-radius:10px;border:1px solid #d6e1dc;background:#fafafa;cursor:pointer}
+    .radio-btn input[type="radio"]{
+      accent-color: var(--green); /* color verde al seleccionar */
+      transform:scale(1.2);
+      cursor:pointer;
+    }
+
     .btn{
       display:inline-block;width:100%;text-align:center;padding:12px 14px;border-radius:10px;border:0;background:var(--green);
-      color:#fff;font-weight:600;margin-top:14px;cursor:pointer;font-size:15px;
+      color:#fff;font-weight:600;margin-top:20px;cursor:pointer;font-size:15px;
+      transition: background 0.3s;
     }
+    .btn:hover{background:#05582b}
     .muted{font-size:12px;color:#6a736c;margin-top:10px}
-    #msg{margin-top:12px;font-size:14px}
+    #msg{margin-top:14px;font-size:14px}
 
-    /* XL layout */
-    @media(min-width:600px){
-      .card{padding:20px}
-      h1{font-size:18px}
-      .hdr .brand-title{font-size:20px}
-      .logo{width:56px;height:56px}
+    /* Estado de gracias */
+    .card.success{
+      background: var(--green);
+      color: #fff;
+      text-align:center;
+      padding:40px 20px;
+    }
+    .card.success .logo-success{
+      width:80px;
+      height:80px;
+      margin:0 auto 16px;
+    }
+    .card.success .logo-success img{
+      width:100%;height:100%;object-fit:contain;
+    }
+    .card.success h2{
+      font-size:22px;margin:0 0 8px;
+    }
+    .card.success p{
+      margin:0;font-size:15px;
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="card" role="main" aria-labelledby="pageTitle">
+    <div class="card" role="main" aria-labelledby="pageTitle" id="cardBox">
       <div class="hdr">
         <div class="logo" aria-hidden="true">
-          <!-- reemplazá src por la ruta a tu logo; si falla, muestra texto SIRO -->
-          <img src="./logo-siro.png" alt="SIRO logo" onerror="this.style.display='none';document.getElementById('brandText').style.display='block'"/>
+          <img src="./logo-siro.png" alt="SIRO logo"/>
         </div>
         <div>
-          <div id="brandText" style="display:none;font-weight:700;color:var(--green)">SIRO</div>
           <div class="subtitle">VCY · Encuesta rápida</div>
         </div>
       </div>
@@ -96,112 +109,89 @@
       <p class="lead">Respondé las 3 preguntas y dejá tus datos. Solo recopilamos info para contacto y análisis.</p>
 
       <form id="leadForm" autocomplete="off">
-        <!-- PREGUNTA 1 -->
+        <!-- P1 -->
         <label>1- ¿Con qué frase describirías el estado de tu cobranza hoy?</label>
-        <div class="radio-row" role="radiogroup" aria-labelledby="q1label">
+        <div class="radio-row">
           <label class="radio-btn"><input type="radio" name="q1" value="Todo bajo control" required/> <span>Todo bajo control</span></label>
           <label class="radio-btn"><input type="radio" name="q1" value="Apago incendio todos los meses" required/> <span>Apago incendio todos los meses</span></label>
           <label class="radio-btn"><input type="radio" name="q1" value="Sálvese quien pueda" required/> <span>Sálvese quien pueda</span></label>
           <label class="radio-btn"><input type="radio" name="q1" value="Tenemos todo automatizado" required/> <span>Tenemos todo automatizado</span></label>
         </div>
 
-        <!-- PREGUNTA 2 -->
+        <!-- P2 -->
         <label>2- Si la cobranza fuera un deporte en tu colegio, sería…</label>
-        <div class="radio-row" role="radiogroup" aria-labelledby="q2label">
-          <label class="radio-btn"><input type="radio" name="q2" value="Maratón (larga y agotadora)" required/> <span>Maratón (larga y agotadora)</span></label>
-          <label class="radio-btn"><input type="radio" name="q2" value="Boxeo (todos los meses peleando)" required/> <span>Boxeo (todos los meses peleando)</span></label>
-          <label class="radio-btn"><input type="radio" name="q2" value="Yoga (tranquila y en paz)" required/> <span>Yoga (tranquila y en paz)</span></label>
-          <label class="radio-btn"><input type="radio" name="q2" value="Fórmula 1 (rápida y con mucha tecnología)" required/> <span>Fórmula 1 (rápida y con mucha tecnología)</span></label>
+        <div class="radio-row">
+          <label class="radio-btn"><input type="radio" name="q2" value="Maratón" required/> <span>Maratón (larga y agotadora)</span></label>
+          <label class="radio-btn"><input type="radio" name="q2" value="Boxeo" required/> <span>Boxeo (todos los meses peleando)</span></label>
+          <label class="radio-btn"><input type="radio" name="q2" value="Yoga" required/> <span>Yoga (tranquila y en paz)</span></label>
+          <label class="radio-btn"><input type="radio" name="q2" value="Fórmula 1" required/> <span>Fórmula 1 (rápida y con mucha tecnología)</span></label>
         </div>
 
-        <!-- PREGUNTA 3 -->
+        <!-- P3 -->
         <label>3- ¿Cómo se comportan los padres de tu colegio al pagar?</label>
-        <div class="radio-row" role="radiogroup" aria-labelledby="q3label">
-          <label class="radio-btn"><input type="radio" name="q3" value="Puntuales como reloj suizo" required/> <span>Puntuales como reloj suizo</span></label>
-          <label class="radio-btn"><input type="radio" name="q3" value="Se hacen los distraídos" required/> <span>Se hacen los distraídos</span></label>
-          <label class="radio-btn"><input type="radio" name="q3" value="Pagan, pero siempre tarde" required/> <span>Pagan, pero siempre tarde</span></label>
-          <label class="radio-btn"><input type="radio" name="q3" value="Pagan fácil porque tienen alternativas" required/> <span>Pagan fácil porque tienen alternativas</span></label>
+        <div class="radio-row">
+          <label class="radio-btn"><input type="radio" name="q3" value="Puntuales" required/> <span>Puntuales como reloj suizo</span></label>
+          <label class="radio-btn"><input type="radio" name="q3" value="Distraídos" required/> <span>Se hacen los distraídos</span></label>
+          <label class="radio-btn"><input type="radio" name="q3" value="Siempre tarde" required/> <span>Pagan, pero siempre tarde</span></label>
+          <label class="radio-btn"><input type="radio" name="q3" value="Con alternativas" required/> <span>Pagan fácil porque tienen alternativas</span></label>
         </div>
 
         <!-- DATOS -->
-        <label style="margin-top:12px">Nombre y Apellido</label>
+        <label>Nombre y Apellido</label>
         <input class="field" name="fullname" type="text" placeholder="Ej: María Pérez" required />
 
-        <label style="margin-top:10px">Institución que representa</label>
+        <label>Institución que representa</label>
         <input class="field" name="institution" type="text" placeholder="Nombre del colegio / institución" required />
 
-        <label style="margin-top:10px">Teléfono</label>
-        <input class="field" name="phone" type="tel" placeholder="+54 9 ..." />
+        <label>Teléfono</label>
+        <input class="field" name="phone" type="tel" inputmode="numeric" pattern="[0-9]+" placeholder="Solo números" />
 
         <input type="hidden" name="campaign" value="standA" />
-
         <button id="submitBtn" class="btn" type="submit">Enviar</button>
-
         <div id="msg" class="muted" role="status" aria-live="polite"></div>
       </form>
     </div>
   </div>
 
   <script>
-    // === CONFIG: pegá la URL del trigger de Power Automate aquí ===
-    const ENDPOINT = 'https://prod-08.brazilsouth.logic.azure.com/workflows/fdc421922b074f4689709fb7f59f3fba/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Xl30kx4vfUwUi877MOaMTh5p4FqEXZIDjTI0tlPR0ZI'    // =================================================================
-
+    const ENDPOINT = "https://prod-08.brazilsouth.logic.azure.com/workflows/fdc421922b074f4689709fb7f59f3fba/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Xl30kx4vfUwUi877MOaMTh5p4FqEXZIDjTI0tlPR0ZI"; // <--- cambia aquí
     const form = document.getElementById('leadForm');
     const msg = document.getElementById('msg');
     const btn = document.getElementById('submitBtn');
+    const card = document.getElementById('cardBox');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       btn.disabled = true;
       msg.textContent = 'Enviando...';
 
-      // Normalizar datos
-      const data = Object.fromEntries(new FormData(form).entries());
-      // Si no viene teléfono, dejalo vacío (no obligatorio)
-      if(!data.phone) data.phone = "";
+      const dataToSend = Object.fromEntries(new FormData(form).entries());
+      if(!dataToSend.phone) dataToSend.phone = "";
 
-      // Reemplazar el bloque fetch(...) por esto temporalmente para debug:
       try {
-        const payload = Object.fromEntries(new FormData(form).entries());
-        // normalizar nombres (aseguramos que las claves existan)
-        const dataToSend = {
-          q1: payload.q1 || "",
-          q2: payload.q2 || "",
-          q3: payload.q3 || "",
-          fullname: payload.fullname || "",
-          institution: payload.institution || "",
-          phone: payload.phone || "",
-          campaign: payload.campaign || ""
-        };
-
-        console.log("Payload a enviar:", dataToSend);
-
         const res = await fetch(ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dataToSend)
         });
-
-        const text = await res.text(); // siempre leemos el body como text para ver errores
-        console.log("HTTP status:", res.status, res.statusText);
-        console.log("Body de respuesta (texto):", text);
-
-        let json;
-        try { json = JSON.parse(text); } catch(e){ json = null; }
-
-        if ((res.status == 202) || (res.status == 201) || (res.status == 200)) {
-          msg.innerHTML = `¡Gracias ${dataToSend.fullname}! Tus respuestas fueron guardadas.`;
-          form.reset();
-        } else {
-          msg.textContent = 'No se pudo enviar. ' + (json?.error || text || 'Intentá nuevamente.');
+        if(res.ok){
+          // Animación de éxito
+          card.classList.add("success");
+          card.innerHTML = `
+            <div class="logo-success">
+              <img src="./logo-siro-gracias.png" alt="Logo éxito"/>
+            </div>
+            <h2>¡Gracias ${dataToSend.fullname}!</h2>
+            <p>Tus respuestas fueron guardadas correctamente.</p>
+          `;
+        }else{
+          msg.textContent = 'Error al enviar. Intentá de nuevo.';
         }
-      } catch (err) {
-        console.error(err);
-        msg.textContent = 'Error de red. Verificá conexión.';
+      } catch (err){
+        msg.textContent = 'Error de red.';
       } finally {
         btn.disabled = false;
       }
-
     });
   </script>
 </body>
