@@ -337,7 +337,7 @@
 
   <script>
     // TODO: Replace with your Power Automate Response endpoint URL
-    const PARTICIPANTS_ENDPOINT = "https://prod-08.brazilsouth.logic.azure.com/workflows/YOUR_WORKFLOW_ID/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=YOUR_SIGNATURE";
+    const PARTICIPANTS_ENDPOINT = "https://teams.microsoft.com/l/message/19:9ba77367-68e6-4627-b4d2-ec818abe6e23_c73c944d-d848-4624-ab54-651f14df44a5@unq.gbl.spaces/1758023866889?context=%7B%22contextType%22%3A%22chat%22%7D";
     
     let participants = [];
     
@@ -396,8 +396,8 @@
       
       participantsGrid.innerHTML = participants.map((participant, index) => `
         <div class="participant-card" data-index="${index}">
-          <div class="participant-name">${escapeHtml(participant.fullname || participant.nombre || 'Sin nombre')}</div>
-          <div class="participant-institution">${escapeHtml(participant.institution || participant.institucion || 'Sin institución')}</div>
+          <div class="participant-name">${escapeHtml(participant.FullName || participant.nombre || 'Sin nombre')}</div>
+          <div class="participant-institution">${escapeHtml(participant.Institution || participant.institucion || 'Sin institución')}</div>
         </div>
       `).join('');
 
