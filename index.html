@@ -348,8 +348,8 @@
         });
         if (res.ok) {
           
+          msg.textContent = ''
           showSuccessModal(dataToSend.fullname, './logo-siro-gracias.png', 4000);
-          
           form.reset();
           
           document.querySelectorAll('.radio-btn.selected').forEach(n => n.classList.remove('selected'));
