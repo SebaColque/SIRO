@@ -277,7 +277,7 @@
           <label><b>2- ¿Cómo hacés las conciliaciones de cobranzas de tu colegio?</b></label>
           <div class="radio-row" data-group="q2">
             <label class="radio-btn"><input type="radio" name="q2" value="A mano" required/> <span>A mano</span></label>
-            <label class="radio-btn"><input type="radio" name="q2" value="Con mi sistema de autogestión" required/> <span>Con mi sistema de autogestión</span></label>
+            <label class="radio-btn"><input type="radio" name="q2" value="Con mi sistema de autogestion" required/> <span>Con mi sistema de autogestión</span></label>
             <label class="radio-btn"><input type="radio" name="q2" value="Todo automatizado" required/> <span>Todo automatizado</span></label>
           </div>
         </div>
@@ -287,8 +287,8 @@
           <label><b>3- ¿Consideras que tenés resuelta la cobranza de tu colegio?</b></label>
           <div class="radio-row" data-group="q3">
             <label class="radio-btn"><input type="radio" name="q3" value="Si" required/> <span>Si</span></label>
-            <label class="radio-btn"><input type="radio" name="q3" value="No, y tampoco quiero mejorarla" required/> <span>No, y tampoco quiero mejorarla</span></label>
-            <label class="radio-btn"><input type="radio" name="q3" value="No, pero me gustaría saber como automatizar el proceso" required/> <span>No, pero me gustaría saber como automatizar el proceso</span></label>
+            <label class="radio-btn"><input type="radio" name="q3" value="No quiero mejorarla" required/> <span>No, y tampoco quiero mejorarla</span></label>
+            <label class="radio-btn"><input type="radio" name="q3" value="Me gustara saber como automatizar el proceso" required/> <span>No, pero me gustaría saber como automatizar el proceso</span></label>
           </div>
         </div>
 
@@ -342,7 +342,8 @@
       const dataToSend = Object.fromEntries(new FormData(form).entries());
       if(!dataToSend.phone) dataToSend.phone = "";
 
-      try {
+      try {´
+        console.log(JSON.stringify(dataToSend))
         const res = await fetch(ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
