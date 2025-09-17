@@ -238,43 +238,14 @@
         </div>
       </div>
 
+      <div class="image-container" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+        <img src="./ruletaSIRO.png" alt="Imagen Ruleta SIRO" style="max-width: 100%; height: auto;" />
+      </div>
+
+
       <h1 id="pageTitle">Nos interesa conocer tu experiencia con las cobranzas</h1>
 
-      <form id="leadForm" autocomplete="off">
-        <!-- P1 -->
-        <div class="question-block">
-          <label><b>1- ¿Con qué frase describirías el estado de tu cobranza hoy?</b></label>
-          <div class="radio-row" data-group="q1">
-            <label class="radio-btn"><input type="radio" name="q1" value="Todo bajo control" required/> <span>Todo bajo control</span></label>
-            <label class="radio-btn"><input type="radio" name="q1" value="Apago incendio todos los meses" required/> <span>Apago incendio todos los meses</span></label>
-            <label class="radio-btn"><input type="radio" name="q1" value="Sálvese quien pueda" required/> <span>Sálvese quien pueda</span></label>
-            <label class="radio-btn"><input type="radio" name="q1" value="Tenemos todo automatizado" required/> <span>Tenemos todo automatizado</span></label>
-          </div>
-        </div>
-
-        <!-- P2 -->
-        <div class="question-block">
-          <label><b>2- Si la cobranza fuera un deporte en tu colegio, sería…</b></label>
-          <div class="radio-row" data-group="q2">
-            <label class="radio-btn"><input type="radio" name="q2" value="Maratón" required/> <span>Maratón (larga y agotadora)</span></label>
-            <label class="radio-btn"><input type="radio" name="q2" value="Boxeo" required/> <span>Boxeo (todos los meses peleando)</span></label>
-            <label class="radio-btn"><input type="radio" name="q2" value="Yoga" required/> <span>Yoga (tranquila y en paz)</span></label>
-            <label class="radio-btn"><input type="radio" name="q2" value="Fórmula 1" required/> <span>Fórmula 1 (rápida y con mucha tecnología)</span></label>
-          </div>
-        </div>
-
-        <!-- P3 -->
-        <div class="question-block">
-          <label><b>3- ¿Cómo se comportan los padres de tu colegio al pagar?</b></label>
-          <div class="radio-row" data-group="q3">
-            <label class="radio-btn"><input type="radio" name="q3" value="Puntuales" required/> <span>Puntuales como reloj suizo</span></label>
-            <label class="radio-btn"><input type="radio" name="q3" value="Distraídos" required/> <span>Se hacen los distraídos</span></label>
-            <label class="radio-btn"><input type="radio" name="q3" value="Siempre tarde" required/> <span>Pagan, pero siempre tarde</span></label>
-            <label class="radio-btn"><input type="radio" name="q3" value="Con alternativas" required/> <span>Pagan fácil porque tienen alternativas</span></label>
-          </div>
-        </div>
-
-        <!-- DATOS -->
+      <!-- DATOS -->
         <div class="question-block contacto">
           <label><b>Nombre y Apellido</b></label>
           <input class="field" name="fullname" type="text" placeholder="Escribe tu nombre completo" required />
@@ -288,6 +259,37 @@
         <div class="question-block contacto">
           <label><b>Teléfono</b></label>
           <input class="field" name="phone" type="tel" inputmode="numeric" pattern="[0-9]+" placeholder="Ingresa tu número de contacto" required />
+        </div>
+
+      <form id="leadForm" autocomplete="off">
+        <!-- P1 -->
+        <div class="question-block">
+          <label><b>1- ¿Cómo viene la morosidad de tu colegio?</b></label>
+          <div class="radio-row" data-group="q1">
+            <label class="radio-btn"><input type="radio" name="q1" value="Baja" required/> <span>Baja</span></label>
+            <label class="radio-btn"><input type="radio" name="q1" value="Media" required/> <span>Media</span></label>
+            <label class="radio-btn"><input type="radio" name="q1" value="Alta" required/> <span>Alta</span></label>
+          </div>
+        </div>
+
+        <!-- P2 -->
+        <div class="question-block">
+          <label><b>2- ¿Cómo hacés las conciliaciones de cobranzas de tu colegio?</b></label>
+          <div class="radio-row" data-group="q2">
+            <label class="radio-btn"><input type="radio" name="q2" value="A mano" required/> <span>A mano</span></label>
+            <label class="radio-btn"><input type="radio" name="q2" value="Con mi sistema de autogestión" required/> <span>Con mi sistema de autogestión</span></label>
+            <label class="radio-btn"><input type="radio" name="q2" value="Todo automatizado" required/> <span>Todo automatizado</span></label>
+          </div>
+        </div>
+
+        <!-- P3 -->
+        <div class="question-block">
+          <label><b>3- ¿Consideras que tenés resuelta la cobranza de tu colegio?</b></label>
+          <div class="radio-row" data-group="q3">
+            <label class="radio-btn"><input type="radio" name="q3" value="Si" required/> <span>Si</span></label>
+            <label class="radio-btn"><input type="radio" name="q3" value="No, y tampoco quiero mejorarla" required/> <span>No, y tampoco quiero mejorarla</span></label>
+            <label class="radio-btn"><input type="radio" name="q3" value="No, pero me gustaría saber como automatizar el proceso" required/> <span>No, pero me gustaría saber como automatizar el proceso</span></label>
+          </div>
         </div>
 
         <input type="hidden" name="campaign" value="standA" />
