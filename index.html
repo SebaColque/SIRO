@@ -348,6 +348,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dataToSend)
         });
+        console.log(res)
         if (res.ok) {
           
           msg.textContent = ''
@@ -359,6 +360,7 @@
           msg.textContent = 'Error al enviar. Intentá de nuevo.';
         }
       } catch (err){
+        console.log(err)
         msg.textContent = 'Error de red.';
       } finally {
         btn.disabled = false;
